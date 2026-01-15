@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../favorites/presentation/controllers/favorites_controller.dart';
 import '../../../favorites/presentation/controllers/likes_controller.dart';
+import '../../../sharing/presentation/widgets/quote_share_bottom_sheet.dart';
 import '../../domain/quote.dart';
 
 /// Widget displaying a single quote card with favorites and likes
@@ -91,6 +92,16 @@ class QuoteCard extends ConsumerWidget {
                     ),
                   ),
                   const Spacer(),
+
+                  // Share button
+                  IconButton(
+                    icon: const Icon(Icons.share_outlined),
+                    onPressed: () {
+                      QuoteShareBottomSheet.show(context, quote);
+                    },
+                    tooltip: 'Share',
+                    visualDensity: VisualDensity.compact,
+                  ),
 
                   // Like button with count
                   Row(
