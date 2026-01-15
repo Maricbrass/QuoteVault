@@ -6,7 +6,7 @@ import '../../domain/quote_card_style.dart';
 /// This widget is captured as an image
 class ExportableQuoteCard extends StatelessWidget {
   final Quote quote;
-  final QuoteCardStyle style;
+  final dynamic style;
   final double width;
   final double height;
 

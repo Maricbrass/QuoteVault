@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../data/daily_quote_repository.dart';
-import '../domain/daily_quote.dart';
+import '../../../core/utils/logger.dart';
+import '../../data/daily_quote_repository.dart';
+import '../../domain/daily_quote.dart';
 
 /// Provider for daily quote repository
 final dailyQuoteRepositoryProvider = Provider<DailyQuoteRepository>((ref) {

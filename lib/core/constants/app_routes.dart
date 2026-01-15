@@ -13,7 +13,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String settings = '/settings';
   static const String favorites = '/favorites';
-  static const String favorites = '/favorites';
+  // static const String favorites = '/favorites';
 
   // Quote Routes
   static const String quotes = '/quotes';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../data/settings_repository.dart';
-import '../domain/settings_enums.dart' as enums;
-import '../domain/user_settings.dart';
+import '../../../core/utils/logger.dart';
+import '../../data/settings_repository.dart';
+import '../../domain/settings_enums.dart' as enums;
+import '../../domain/user_settings.dart';
 
 /// Controller for user settings
 class SettingsController extends StateNotifier<UserSettings> {

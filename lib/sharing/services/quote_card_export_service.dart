@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,9 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../core/utils/logger.dart';
 import '../../quotes/domain/quote.dart';
 
-/// Service for exporting quote cards as images
 class QuoteCardExportService {
-  /// Generate image from RepaintBoundary
   Future<Uint8List?> captureWidget(GlobalKey key) async {
     try {
       appLogger.info('Capturing widget as image');

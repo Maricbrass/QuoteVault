@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_routes.dart';
+import '../../../core/widgets/offline_banner.dart';
 import '../../../daily_quote/presentation/widgets/daily_quote_widget.dart';
 import '../controllers/quote_feed_controller.dart';
 import '../providers/quote_providers.dart';
@@ -74,9 +75,16 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: _handleRefresh,
-        child: CustomScrollView(
+      body: Column(
+        children: [
+          // Offline banner
+          const OfflineBanner(),
+
+          // Main content
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _handleRefresh,
+              child: CustomScrollView(
           controller: _scrollController,
           slivers: [
             // Daily Quote Widget
@@ -177,6 +185,9 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
               ),
           ],
         ),
+            ),
+          ),
+        ],
       ),
     );
   }

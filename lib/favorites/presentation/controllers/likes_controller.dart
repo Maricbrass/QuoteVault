@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../data/likes_repository.dart';
+import '../../../core/utils/logger.dart';
+import '../../data/likes_repository.dart';
 import 'favorites_controller.dart';
 
 /// State for likes

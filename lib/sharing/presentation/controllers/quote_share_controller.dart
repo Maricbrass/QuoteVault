@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../../quotes/domain/quote.dart';
-import '../domain/quote_card_style.dart';
-import '../services/quote_card_export_service.dart';
-import '../services/quote_share_service.dart';
+import 'package:quotevault/core/utils/logger.dart';
+import 'package:quotevault/quotes/domain/quote.dart';
+import 'package:quotevault/sharing/domain/quote_card_style.dart';
+import 'package:quotevault/sharing/services/quote_card_export_service.dart';
+import 'package:quotevault/sharing/services/quote_share_service.dart';
 
 /// State for quote sharing
 class QuoteShareState {
@@ -46,6 +46,7 @@ class QuoteShareState {
     );
   }
 }
+
 
 /// Controller for quote sharing
 class QuoteShareController extends StateNotifier<QuoteShareState> {
@@ -207,4 +208,3 @@ final quoteShareControllerProvider =
 /// Provider for selected quote card style
 final selectedQuoteCardStyleProvider =
     StateProvider<QuoteCardStyle>((ref) => QuoteCardStyle.classic());
-

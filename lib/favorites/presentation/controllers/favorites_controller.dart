@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../../quotes/domain/quote.dart';
-import '../data/favorites_repository.dart';
+import '../../../core/utils/logger.dart';
+import '../../../quotes/domain/quote.dart';
+import '../../data/favorites_repository.dart';
 
 /// State for favorites
 class FavoritesState {

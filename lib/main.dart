@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'app.dart';
+import 'core/errors/global_error_handler.dart';
 import 'core/services/env_config.dart';
 import 'core/services/supabase_service.dart';
 import 'core/utils/logger.dart';
@@ -29,6 +30,10 @@ Future<void> _initializeServices() async {
   try {
     appLogger.info('Initializing QuoteVault services...');
 
+    // Initialize global error handler
+    GlobalErrorHandler.initialize();
+    appLogger.info('Error handler initialized');
+
     // Initialize Hive for local storage
     await Hive.initFlutter();
     appLogger.info('Hive initialized');
@@ -50,6 +55,9 @@ Future<void> _initializeServices() async {
     // Initialize notification service
     await NotificationService().initialize();
     appLogger.info('Notification service initialized');
+
+    // Connectivity service will be initialized via Riverpod provider
+    appLogger.info('Connectivity service ready');
 
     appLogger.info('All services initialized successfully');
   } catch (e, stackTrace) {

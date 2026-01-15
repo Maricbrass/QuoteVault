@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/quote_repository.dart';
 import '../../domain/quote.dart';
-import 'quote_feed_controller.dart';
+import '../controllers/quote_feed_controller.dart';
 
 /// Provider for fetching all available categories
 final categoriesProvider = FutureProvider<List<String>>((ref) async {

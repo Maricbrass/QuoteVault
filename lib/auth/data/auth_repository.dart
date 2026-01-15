@@ -114,17 +114,16 @@ class AuthRepository {
 
   /// Map Supabase User to domain User model
   User _mapSupabaseUserToDomain(supabase.User supabaseUser) {
+    final createdAt = supabaseUser.createdAt;
+    final updatedAt = supabaseUser.updatedAt;
+
     return User(
       id: supabaseUser.id,
       email: supabaseUser.email ?? '',
       name: supabaseUser.userMetadata?['name'] as String?,
       avatarUrl: supabaseUser.userMetadata?['avatar_url'] as String?,
-      createdAt: supabaseUser.createdAt != null
-          ? DateTime.parse(supabaseUser.createdAt)
-          : null,
-      updatedAt: supabaseUser.updatedAt != null
-          ? DateTime.parse(supabaseUser.updatedAt)
-          : null,
+      createdAt: createdAt != null ? DateTime.parse(createdAt) : null,
+      updatedAt: updatedAt != null ? DateTime.parse(updatedAt) : null,
     );
   }
 

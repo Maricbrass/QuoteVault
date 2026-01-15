@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../../quotes/domain/quote.dart';
-import '../data/collections_repository.dart';
-import '../domain/collection.dart';
+import '../../../core/utils/logger.dart';
+import '../../../quotes/domain/quote.dart';
+import '../../data/collections_repository.dart';
+import '../../domain/collection.dart';
 
 /// State for collections
 class CollectionsState {

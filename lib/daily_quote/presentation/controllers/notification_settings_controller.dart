@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/utils/logger.dart';
-import '../data/daily_quote_repository.dart';
-import '../data/notification_settings_repository.dart';
-import '../domain/notification_settings.dart';
-import '../services/notification_service.dart';
+import '../../../core/utils/logger.dart';
+import '../../data/daily_quote_repository.dart';
+import '../../data/notification_settings_repository.dart';
+import '../../domain/notification_settings.dart';
+import '../../services/notification_service.dart';
 
 /// State for notification settings
 class NotificationSettingsState {

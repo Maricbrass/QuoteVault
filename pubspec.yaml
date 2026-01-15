@@ -72,6 +72,12 @@ dependencies:
   # App info
   package_info_plus: ^8.0.2
 
+  # Connectivity and offline support
+  connectivity_plus: ^6.0.5
+
+  # Performance optimization
+  cached_network_image: ^3.4.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
