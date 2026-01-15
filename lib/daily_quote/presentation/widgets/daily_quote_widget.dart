@@ -16,107 +16,177 @@ class DailyQuoteWidget extends ConsumerWidget {
 
         return Container(
           margin: const EdgeInsets.all(16),
-          padding: const EdgeInsets.all(20),
+          height: 280,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+            gradient: const RadialGradient(
+              center: Alignment(0, -0.5),
+              radius: 1.5,
               colors: [
-                Theme.of(context).colorScheme.primaryContainer,
-                Theme.of(context).colorScheme.secondaryContainer,
+                Color(0xFF17B0CF),
+                Color(0xFF1498AE),
+                Color(0xFF0D7C8A),
               ],
             ),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
+                color: const Color(0xFF17B0CF).withAlpha((0.3 * 255).toInt()),
+                blurRadius: 16,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              // Header
-              Row(
-                children: [
-                  Icon(
-                    Icons.wb_sunny,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 28,
+              // Dot pattern overlay
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white.withOpacity(0.05),
+                    backgroundBlendMode: BlendMode.overlay,
                   ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Quote of the Day',
-                          style:
-                              Theme.of(context).textTheme.titleLarge?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).colorScheme.primary,
-                                  ),
-                        ),
-                        Text(
-                          dailyQuote.dateString,
-                          style:
-                              Theme.of(context).textTheme.bodySmall?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant,
-                                  ),
-                        ),
+                  child: CustomPaint(
+                    painter: DotPatternPainter(),
+                  ),
+                ),
+              ),
+              // Gradient overlay for better text readability
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withAlpha((0.4 * 255).toInt()),
                       ],
                     ),
                   ),
-                ],
+                ),
               ),
-              const SizedBox(height: 16),
+              // Content
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // Header
+                      Text(
+                        'QUOTE OF THE DAY',
+                        style: TextStyle(
+                          color: Colors.white.withAlpha((0.8 * 255).toInt()),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
 
-              // Quote text
-              Text(
-                '"${quote.text}"',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontStyle: FontStyle.italic,
-                      height: 1.6,
-                      fontSize: 18,
-                    ),
-              ),
-              const SizedBox(height: 12),
-
-              // Author and category
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      '— ${quote.author}',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color:
-                                Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      quote.category,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
+                      // Quote text
+                      Expanded(
+                        child: Text(
+                          '"${quote.text}"',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'Playfair Display',
+                            fontStyle: FontStyle.italic,
+                            fontSize: 24,
+                            height: 1.4,
                             fontWeight: FontWeight.w600,
                           ),
-                    ),
+                        ),
+                      ),
+
+                      // Author
+                      Text(
+                        '— ${quote.author}',
+                        style: TextStyle(
+                          color: Colors.white.withAlpha((0.9 * 255).toInt()),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Actions
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha((0.2 * 255).toInt()),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    // TODO: Add to favorites
+                                  },
+                                  padding: const EdgeInsets.all(8),
+                                  constraints: const BoxConstraints(),
+                                ),
+                              ),
+                              const SizedBox(width: 8),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha((0.2 * 255).toInt()),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(
+                                    Icons.ios_share,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    // TODO: Share quote
+                                  },
+                                  padding: const EdgeInsets.all(8),
+                                  constraints: const BoxConstraints(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // TODO: Save to vault
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: const Color(0xFF0E191B),
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 10,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                            child: const Text(
+                              'Save to Vault',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
@@ -124,10 +194,10 @@ class DailyQuoteWidget extends ConsumerWidget {
       },
       loading: () => Container(
         margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(20),
+        height: 280,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: const Center(
           child: CircularProgressIndicator(),
@@ -135,37 +205,54 @@ class DailyQuoteWidget extends ConsumerWidget {
       ),
       error: (error, stack) => Container(
         margin: const EdgeInsets.all(16),
-        padding: const EdgeInsets.all(20),
+        height: 280,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.errorContainer,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: Column(
-          children: [
-            Icon(
-              Icons.error_outline,
-              color: Theme.of(context).colorScheme.error,
-              size: 48,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              'Failed to load daily quote',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onErrorContainer,
-                  ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              error.toString(),
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onErrorContainer,
-                  ),
-              textAlign: TextAlign.center,
-            ),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline,
+                color: Theme.of(context).colorScheme.error,
+                size: 48,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Failed to load daily quote',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onErrorContainer,
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+/// Custom painter for dot pattern overlay
+class DotPatternPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white.withAlpha((0.1 * 255).toInt())
+      ..style = PaintingStyle.fill;
+
+    const spacing = 24.0;
+    const dotRadius = 1.0;
+
+    for (double x = spacing; x < size.width; x += spacing) {
+      for (double y = spacing; y < size.height; y += spacing) {
+        canvas.drawCircle(Offset(x, y), dotRadius, paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 

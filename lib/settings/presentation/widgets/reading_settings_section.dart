@@ -134,7 +134,7 @@ class ReadingSettingsSection extends ConsumerWidget {
                   Text(
                     '"The only way to do great work is to love what you do."',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: 16 * settings.fontSizeScale,
+                          fontSize: (16 * settings.fontSizeScale).toDouble(),
                           height: settings.lineSpacing,
                           fontStyle: FontStyle.italic,
                         ),
@@ -144,7 +144,7 @@ class ReadingSettingsSection extends ConsumerWidget {
                     Text(
                       '— Steve Jobs',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 14 * settings.fontSizeScale,
+                            fontSize: (14 * settings.fontSizeScale).toDouble(),
                             fontWeight: FontWeight.w600,
                           ),
                     ),

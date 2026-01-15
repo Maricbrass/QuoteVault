@@ -5,6 +5,7 @@ class User {
   final String email;
   final String? name;
   final String? avatarUrl;
+  final String? bio;
   final DateTime? createdAt;
   final DateTime? updatedAt;
 
@@ -13,6 +14,7 @@ class User {
     required this.email,
     this.name,
     this.avatarUrl,
+    this.bio,
     this.createdAt,
     this.updatedAt,
   });
@@ -24,6 +26,7 @@ class User {
       email: json['email'] as String,
       name: json['name'] as String?,
       avatarUrl: json['avatar_url'] as String?,
+      bio: json['bio'] as String?,
       createdAt: json['created_at'] != null
           ? DateTime.parse(json['created_at'] as String)
           : null,
@@ -40,6 +43,7 @@ class User {
       'email': email,
       'name': name,
       'avatar_url': avatarUrl,
+      'bio': bio,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
     };
@@ -50,6 +54,7 @@ class User {
     return {
       'name': name,
       'avatar_url': avatarUrl,
+      'bio': bio,
     };
   }
 
@@ -59,6 +64,7 @@ class User {
     String? email,
     String? name,
     String? avatarUrl,
+    String? bio,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -67,6 +73,7 @@ class User {
       email: email ?? this.email,
       name: name ?? this.name,
       avatarUrl: avatarUrl ?? this.avatarUrl,
+      bio: bio ?? this.bio,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -99,6 +106,7 @@ class User {
         other.email == email &&
         other.name == name &&
         other.avatarUrl == avatarUrl &&
+        other.bio == bio &&
         other.createdAt == createdAt &&
         other.updatedAt == updatedAt;
   }
@@ -109,6 +117,7 @@ class User {
         email.hashCode ^
         name.hashCode ^
         avatarUrl.hashCode ^
+        bio.hashCode ^
         createdAt.hashCode ^
         updatedAt.hashCode;
   }
@@ -118,4 +127,3 @@ class User {
     return 'User(id: $id, email: $email, name: $name, hasAvatar: $hasAvatar)';
   }
 }
-

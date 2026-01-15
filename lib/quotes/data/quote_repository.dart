@@ -49,7 +49,8 @@ class QuoteRepository {
 
       final quotes = (response as List)
           .map((json) => Quote.fromJson(json as Map<String, dynamic>))
-          .toList();
+          .toList()
+          .cast<Quote>();
 
       appLogger.info('Fetched ${quotes.length} quotes');
       return quotes;

@@ -190,6 +190,33 @@ class ProfileController extends StateNotifier<ProfileState> {
     }
   }
 
+  /// Update user profile bio
+  Future<void> updateBio(String bio) async {
+    state = state.copyWith(isUpdating: true, errorMessage: null);
+
+    try {
+      appLogger.info('Updating profile bio');
+      final updatedProfile = await _profileRepository.updateProfile(
+        userId: _userId,
+        bio: bio.trim(),
+      );
+
+      state = state.copyWith(
+        isUpdating: false,
+        profile: updatedProfile,
+        successMessage: 'Bio updated successfully',
+      );
+      appLogger.info('Profile bio updated');
+    } catch (e, stackTrace) {
+      appLogger.error('Failed to update profile bio', e, stackTrace);
+      state = state.copyWith(
+        isUpdating: false,
+        errorMessage: 'Failed to update bio: ${_getErrorMessage(e)}',
+      );
+      rethrow;
+    }
+  }
+
   /// Refresh profile (for pull-to-refresh)
   Future<void> refresh() async {
     await loadProfile();

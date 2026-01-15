@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   email TEXT NOT NULL,
   name TEXT,
+  bio TEXT,
   avatar_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -156,4 +157,3 @@ SELECT * FROM storage.buckets WHERE name = 'avatars';
 -- SETUP COMPLETE
 -- ============================================================================
 -- Your Supabase backend is now ready for the QuoteVault app!
-

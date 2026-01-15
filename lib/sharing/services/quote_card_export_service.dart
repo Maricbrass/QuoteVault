@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../core/utils/logger.dart';
@@ -17,7 +17,8 @@ class QuoteCardExportService {
       // Wait for next frame to ensure widget is rendered
       await Future.delayed(const Duration(milliseconds: 100));
 
-      final boundary = key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+      final boundary =
+          key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
       if (boundary == null) {
         appLogger.error('RenderRepaintBoundary not found');
@@ -80,7 +81,7 @@ class QuoteCardExportService {
       final timestamp = DateTime.now().millisecondsSinceEpoch;
       final fileName = 'quote_${quote.id}_$timestamp';
 
-      final result = await ImageGallerySaver.saveImage(
+      final result = await ImageGallerySaverPlus.saveImage(
         imageBytes,
         quality: 100,
         name: fileName,
@@ -145,7 +146,7 @@ class QuoteCardExportService {
     try {
       if (Platform.isAndroid) {
         return await Permission.photos.isGranted ||
-               await Permission.storage.isGranted;
+            await Permission.storage.isGranted;
       } else if (Platform.isIOS) {
         return await Permission.photos.isGranted;
       }
@@ -155,4 +156,3 @@ class QuoteCardExportService {
     }
   }
 }
-

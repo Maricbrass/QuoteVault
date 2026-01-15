@@ -66,4 +66,3 @@ class _LogFilter extends LogFilter {
 
 /// Global logger instance
 final appLogger = AppLogger();
-

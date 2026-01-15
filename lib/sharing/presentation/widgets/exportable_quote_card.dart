@@ -6,7 +6,7 @@ import '../../domain/quote_card_style.dart';
 /// This widget is captured as an image
 class ExportableQuoteCard extends StatelessWidget {
   final Quote quote;
-  final dynamic style;
+  final QuoteCardStyle style;
   final double width;
   final double height;
 
@@ -30,96 +30,99 @@ class ExportableQuoteCard extends StatelessWidget {
         ),
         child: Padding(
           padding: style.padding,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Spacer(flex: 2),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 100),
 
-              // Opening quote mark
-              Text(
-                '"',
-                style: TextStyle(
-                  color: style.textColor.withOpacity(0.3),
-                  fontSize: style.quoteFontSize * 2,
-                  fontFamily: style.fontFamily,
-                  fontWeight: style.quoteFontWeight,
-                  height: 0.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 20),
-
-              // Quote text
-              Text(
-                quote.text,
-                style: TextStyle(
-                  color: style.textColor,
-                  fontSize: _calculateFontSize(quote.text.length),
-                  fontFamily: style.fontFamily,
-                  fontWeight: style.quoteFontWeight,
-                  height: 1.5,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 40),
-
-              // Author
-              Text(
-                '— ${quote.author}',
-                style: TextStyle(
-                  color: style.authorColor,
-                  fontSize: style.authorFontSize,
-                  fontFamily: style.fontFamily,
-                  fontWeight: style.authorFontWeight,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 20),
-
-              // Category tag
-              Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  decoration: BoxDecoration(
-                    color: style.textColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    quote.category.toUpperCase(),
-                    style: TextStyle(
-                      color: style.textColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.5,
-                    ),
-                  ),
-                ),
-              ),
-
-              const Spacer(flex: 3),
-
-              // Branding
-              if (style.showBranding)
+                // Opening quote mark
                 Text(
-                  'QuoteVault',
+                  '"',
                   style: TextStyle(
-                    color: style.textColor.withOpacity(0.3),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 2,
+                    color: style.textColor.withAlpha(77),
+                    fontSize: style.quoteFontSize * 2,
+                    fontFamily: style.fontFamily,
+                    fontWeight: style.quoteFontWeight,
+                    height: 0.5,
                   ),
                   textAlign: TextAlign.center,
                 ),
 
-              const SizedBox(height: 40),
-            ],
+                const SizedBox(height: 20),
+
+                // Quote text
+                Text(
+                  quote.text,
+                  style: TextStyle(
+                    color: style.textColor,
+                    fontSize: _calculateFontSize(quote.text.length),
+                    fontFamily: style.fontFamily,
+                    fontWeight: style.quoteFontWeight,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                const SizedBox(height: 40),
+
+                // Author
+                Text(
+                  '— ${quote.author}',
+                  style: TextStyle(
+                    color: style.authorColor,
+                    fontSize: style.authorFontSize,
+                    fontFamily: style.fontFamily,
+                    fontWeight: style.authorFontWeight,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+
+                const SizedBox(height: 20),
+
+                // Category tag
+                Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: style.textColor.withAlpha(38),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      quote.category.toUpperCase(),
+                      style: TextStyle(
+                        color: style.textColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 150),
+
+                // Branding
+                if (style.showBranding)
+                  Text(
+                    'QuoteVault',
+                    style: TextStyle(
+                      color: style.textColor.withAlpha(77),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w300,
+                      letterSpacing: 2,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),
@@ -139,4 +142,3 @@ class ExportableQuoteCard extends StatelessWidget {
     }
   }
 }
-

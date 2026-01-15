@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as material;
+import 'package:flutter/material.dart' show Scaffold, AppBar, Text, TextStyle, ScaffoldMessenger, SnackBar, Column, RefreshIndicator, CustomScrollView, ScrollController, SliverToBoxAdapter, SliverList, SliverChildBuilderDelegate, SliverFillRemaining, Padding, EdgeInsets, Container, BoxDecoration, BorderRadius, ThemeData, Theme, Brightness, Color, BoxShadow, Offset, BoxShape, Center, CircularProgressIndicator, Row, Expanded, TextButton, ElevatedButton, ListView, InkWell, MainAxisAlignment, Widget, BuildContext, FontWeight, Colors, Axis, SizedBox;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_routes.dart';
@@ -6,7 +7,7 @@ import '../../../core/widgets/offline_banner.dart';
 import '../../../daily_quote/presentation/widgets/daily_quote_widget.dart';
 import '../controllers/quote_feed_controller.dart';
 import '../providers/quote_providers.dart';
-import '../widgets/quote_card.dart';
+import '../widgets/quote_card.dart' as quote_widgets;
 
 /// Home feed screen displaying paginated quotes
 class QuotesFeedScreen extends ConsumerStatefulWidget {
@@ -54,24 +55,42 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
     final feedState = ref.watch(quoteFeedProvider);
 
     return Scaffold(
+      backgroundColor: Theme.of(context).brightness == Brightness.dark
+          ? const Color(0xFF111E21)
+          : const Color(0xFFF6F8F8),
       appBar: AppBar(
-        title: const Text('Quotes'),
-        actions: [
-          // Search button
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              context.push(AppRoutes.searchQuotes);
-            },
-            tooltip: 'Search',
+        backgroundColor: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF111E21).withAlpha((0.8 * 255).toInt())
+            : const Color(0xFFF6F8F8).withAlpha((0.8 * 255).toInt()),
+        leading: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: const Color(0xFF17B0CF).withAlpha((0.2 * 255).toInt()),
+            shape: BoxShape.circle,
           ),
-          // Profile button
-          IconButton(
-            icon: const Icon(Icons.person_outline),
+          child: const material.Icon(
+            material.Icons.format_quote,
+            color: Color(0xFF17B0CF),
+            size: 20,
+          ),
+        ),
+        title: const Text(
+          'QuoteVault',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -0.3,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          // Notifications button
+          material.IconButton(
+            icon: const material.Icon(material.Icons.notifications_outlined),
             onPressed: () {
-              context.push(AppRoutes.profile);
+              // TODO: Navigate to notifications
             },
-            tooltip: 'Profile',
+            tooltip: 'Notifications',
           ),
         ],
       ),
@@ -135,7 +154,7 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
                   (context, index) {
                     if (index < feedState.quotes.length) {
                       final quote = feedState.quotes[index];
-                      return QuoteCard(
+                      return quote_widgets.QuoteCard(
                         quote: quote,
                         onTap: () {
                           // TODO: Navigate to quote detail
@@ -203,17 +222,66 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
           margin: const EdgeInsets.symmetric(vertical: 8),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            itemCount: categories.length,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: categories.length + 1, // +1 for "For You" chip
             itemBuilder: (context, index) {
-              final category = categories[index];
+              if (index == 0) {
+                // "For You" chip
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: Container(
+                    height: 36,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF17B0CF),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFF17B0CF).withAlpha((0.3 * 255).toInt()),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'For You',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+
+              final category = categories[index - 1];
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: ActionChip(
-                  label: Text(category),
-                  onPressed: () {
+                padding: const EdgeInsets.only(right: 8),
+                child: InkWell(
+                  onTap: () {
                     context.push('${AppRoutes.quotes}/category/$category');
                   },
+                  child: Container(
+                    height: 36,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF17B0CF).withAlpha((0.1 * 255).toInt()),
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Center(
+                      child: Text(
+                        category,
+                        style: const TextStyle(
+                          color: Color(0xFF17B0CF),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               );
             },
@@ -235,8 +303,8 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.error_outline,
+          material.Icon(
+            material.Icons.error_outline,
             color: Theme.of(context).colorScheme.error,
           ),
           const SizedBox(width: 12),
@@ -264,8 +332,8 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.format_quote,
+          material.Icon(
+            material.Icons.format_quote,
             size: 64,
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
@@ -286,7 +354,7 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
             onPressed: () {
               ref.read(quoteFeedProvider.notifier).refresh();
             },
-            icon: const Icon(Icons.refresh),
+            icon: const material.Icon(material.Icons.refresh),
             label: const Text('Refresh'),
           ),
         ],

@@ -122,8 +122,12 @@ class AuthRepository {
       email: supabaseUser.email ?? '',
       name: supabaseUser.userMetadata?['name'] as String?,
       avatarUrl: supabaseUser.userMetadata?['avatar_url'] as String?,
-      createdAt: createdAt != null ? DateTime.parse(createdAt) : null,
-      updatedAt: updatedAt != null ? DateTime.parse(updatedAt) : null,
+      createdAt: createdAt != null && createdAt.isNotEmpty
+          ? DateTime.parse(createdAt)
+          : null,
+      updatedAt: updatedAt != null && updatedAt.isNotEmpty
+          ? DateTime.parse(updatedAt)
+          : null,
     );
   }
 

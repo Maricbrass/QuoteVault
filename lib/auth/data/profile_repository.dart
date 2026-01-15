@@ -77,10 +77,11 @@ class ProfileRepository {
     }
   }
 
-  /// Update user profile (name and/or avatar)
+  /// Update user profile (name, bio and/or avatar)
   Future<User> updateProfile({
     required String userId,
     String? name,
+    String? bio,
     String? avatarUrl,
   }) async {
     try {
@@ -88,6 +89,7 @@ class ProfileRepository {
 
       final updates = <String, dynamic>{};
       if (name != null) updates['name'] = name;
+      if (bio != null) updates['bio'] = bio;
       if (avatarUrl != null) updates['avatar_url'] = avatarUrl;
 
       if (updates.isEmpty) {

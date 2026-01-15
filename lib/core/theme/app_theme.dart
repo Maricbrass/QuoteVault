@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 class AppTheme {
   AppTheme._();
 
-  // Primary color palette
-  static const Color primaryColor = Color(0xFF6750A4);
-  static const Color secondaryColor = Color(0xFF625B71);
-  static const Color tertiaryColor = Color(0xFF7D5260);
+  // Primary color palette - Teal/Cyan theme
+  static const Color primaryColor = Color(0xFF17B0CF); // Teal
+  static const Color secondaryColor = Color(0xFF14919D);
+  static const Color tertiaryColor = Color(0xFF0D7C8A);
+
+  // Background colors
+  static const Color backgroundLight = Color(0xFFF6F8F8);
+  static const Color backgroundDark = Color(0xFF111E21);
 
   // Light theme
   static ThemeData get lightTheme {
