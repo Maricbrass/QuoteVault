@@ -139,20 +139,11 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
                         onTap: () {
                           // TODO: Navigate to quote detail
                         },
-                        onLike: () {
-                          // TODO: Implement like functionality
+                        onAddToCollection: () {
+                          // TODO: Show collection picker dialog
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Like feature coming soon'),
-                              duration: Duration(seconds: 1),
-                            ),
-                          );
-                        },
-                        onFavorite: () {
-                          // TODO: Implement favorite functionality
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Favorites feature coming soon'),
+                              content: Text('Collections feature coming in next update'),
                               duration: Duration(seconds: 1),
                             ),
                           );

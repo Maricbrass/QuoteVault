@@ -1,27 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../favorites/presentation/controllers/favorites_controller.dart';
+import '../../../favorites/presentation/controllers/likes_controller.dart';
 import '../../domain/quote.dart';
 
-/// Widget displaying a single quote card
-class QuoteCard extends StatelessWidget {
+/// Widget displaying a single quote card with favorites and likes
+class QuoteCard extends ConsumerWidget {
   final Quote quote;
   final VoidCallback? onTap;
-  final VoidCallback? onLike;
-  final VoidCallback? onFavorite;
-  final bool isLiked;
-  final bool isFavorited;
+  final VoidCallback? onAddToCollection;
 
   const QuoteCard({
     super.key,
     required this.quote,
     this.onTap,
-    this.onLike,
-    this.onFavorite,
-    this.isLiked = false,
-    this.isFavorited = false,
+    this.onAddToCollection,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favoritesState = ref.watch(favoritesControllerProvider);
+    final likesState = ref.watch(likesControllerProvider);
+
+    final isFavorited = favoritesState.isFavorited(quote.id);
+    final isLiked = likesState.isLiked(quote.id);
+    final likeCount = likesState.getLikeCount(quote.id);
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       elevation: 2,
@@ -88,18 +92,35 @@ class QuoteCard extends StatelessWidget {
                   ),
                   const Spacer(),
 
-                  // Like button (placeholder)
-                  IconButton(
-                    icon: Icon(
-                      isLiked ? Icons.favorite : Icons.favorite_border,
-                      color: isLiked ? Colors.red : null,
-                    ),
-                    onPressed: onLike,
-                    tooltip: 'Like',
-                    visualDensity: VisualDensity.compact,
+                  // Like button with count
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (likeCount > 0)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: Text(
+                            '$likeCount',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      IconButton(
+                        icon: Icon(
+                          isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
+                          color: isLiked ? Theme.of(context).colorScheme.primary : null,
+                        ),
+                        onPressed: () {
+                          ref
+                              .read(likesControllerProvider.notifier)
+                              .toggleLike(quote.id);
+                        },
+                        tooltip: isLiked ? 'Unlike' : 'Like',
+                        visualDensity: VisualDensity.compact,
+                      ),
+                    ],
                   ),
 
-                  // Favorite button (placeholder)
+                  // Favorite button
                   IconButton(
                     icon: Icon(
                       isFavorited ? Icons.bookmark : Icons.bookmark_border,
@@ -107,8 +128,20 @@ class QuoteCard extends StatelessWidget {
                           ? Theme.of(context).colorScheme.primary
                           : null,
                     ),
-                    onPressed: onFavorite,
-                    tooltip: 'Add to favorites',
+                    onPressed: () {
+                      ref
+                          .read(favoritesControllerProvider.notifier)
+                          .toggleFavorite(quote.id);
+                    },
+                    tooltip: isFavorited ? 'Remove from favorites' : 'Add to favorites',
+                    visualDensity: VisualDensity.compact,
+                  ),
+
+                  // Add to collection button
+                  IconButton(
+                    icon: const Icon(Icons.add_circle_outline),
+                    onPressed: onAddToCollection,
+                    tooltip: 'Add to collection',
                     visualDensity: VisualDensity.compact,
                   ),
                 ],

@@ -12,6 +12,8 @@ class AppRoutes {
   static const String home = '/home';
   static const String profile = '/profile';
   static const String settings = '/settings';
+  static const String favorites = '/favorites';
+  static const String favorites = '/favorites';
 
   // Quote Routes
   static const String quotes = '/quotes';
@@ -22,8 +24,5 @@ class AppRoutes {
   // Collections Routes
   static const String collections = '/collections';
   static const String collectionDetail = '/collections/:id';
-
-  // Favorites Routes
-  static const String favorites = '/favorites';
 }
 

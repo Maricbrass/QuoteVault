@@ -103,6 +103,40 @@ class HomeScreen extends ConsumerWidget {
                 ),
               ),
 
+              const SizedBox(height: 12),
+
+              // Favorites button
+              OutlinedButton.icon(
+                onPressed: () {
+                  context.push(AppRoutes.favorites);
+                },
+                icon: const Icon(Icons.bookmark),
+                label: const Text('My Favorites'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              // Collections button
+              OutlinedButton.icon(
+                onPressed: () {
+                  context.push(AppRoutes.collections);
+                },
+                icon: const Icon(Icons.collections_bookmark),
+                label: const Text('Collections'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 16),
 
               // Info card

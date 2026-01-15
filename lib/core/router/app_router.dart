@@ -6,6 +6,10 @@ import '../../auth/presentation/screens/login_screen.dart';
 import '../../auth/presentation/screens/profile_screen.dart';
 import '../../auth/presentation/screens/signup_screen.dart';
 import '../../auth/presentation/screens/splash_screen.dart';
+import '../../collections/domain/collection.dart';
+import '../../collections/presentation/screens/collection_detail_screen.dart';
+import '../../collections/presentation/screens/collections_screen.dart';
+import '../../favorites/presentation/screens/favorites_screen.dart';
 import '../../home/presentation/screens/home_screen.dart';
 import '../../quotes/presentation/screens/category_quotes_screen.dart';
 import '../../quotes/presentation/screens/quotes_feed_screen.dart';
@@ -76,6 +80,24 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.profile,
         name: 'profile',
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.favorites,
+        name: 'favorites',
+        builder: (context, state) => const FavoritesScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.collections,
+        name: 'collections',
+        builder: (context, state) => const CollectionsScreen(),
+      ),
+      GoRoute(
+        path: '/collections/:id',
+        name: 'collectionDetail',
+        builder: (context, state) {
+          final collection = state.extra as Collection;
+          return CollectionDetailScreen(collection: collection);
+        },
       ),
       GoRoute(
         path: AppRoutes.quotes,
