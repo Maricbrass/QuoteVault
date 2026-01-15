@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../auth/data/auth_repository.dart';
 import '../../../auth/presentation/auth_providers.dart';
+import '../../../auth/presentation/controllers/auth_controller.dart';
 import '../../../core/constants/app_routes.dart';
 
 /// Home screen - main landing page after authentication
@@ -18,6 +18,13 @@ class HomeScreen extends ConsumerWidget {
         title: const Text('QuoteVault'),
         actions: [
           IconButton(
+            icon: const Icon(Icons.person_outline),
+            onPressed: () {
+              context.push(AppRoutes.profile);
+            },
+            tooltip: 'Profile',
+          ),
+          IconButton(
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {
               // TODO: Navigate to settings
@@ -27,6 +34,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
               );
             },
+            tooltip: 'Settings',
           ),
         ],
       ),
@@ -80,6 +88,23 @@ class HomeScreen extends ConsumerWidget {
 
               const SizedBox(height: 48),
 
+              // Browse Quotes button
+              ElevatedButton.icon(
+                onPressed: () {
+                  context.push(AppRoutes.quotes);
+                },
+                icon: const Icon(Icons.format_quote),
+                label: const Text('Browse Quotes'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
               // Info card
               Card(
                 child: Padding(
@@ -115,7 +140,7 @@ class HomeScreen extends ConsumerWidget {
               // Sign out button
               ElevatedButton.icon(
                 onPressed: () async {
-                  await ref.read(authRepositoryProvider).signOut();
+                  await ref.read(authControllerProvider.notifier).signOut();
                   if (context.mounted) {
                     context.go(AppRoutes.login);
                   }

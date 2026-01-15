@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_routes.dart';
 import '../../../core/errors/app_exception.dart';
-import '../controllers/login_controller.dart';
+import '../controllers/auth_controller.dart';
 
 /// Login screen for email/password authentication
 /// Temporary test screen for auth validation
@@ -34,7 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final password = _passwordController.text;
 
     try {
-      await ref.read(loginControllerProvider.notifier).signIn(
+      await ref.read(authControllerProvider.notifier).signIn(
             email: email,
             password: password,
           );
@@ -62,8 +62,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final loginState = ref.watch(loginControllerProvider);
-    final isLoading = loginState.isLoading;
+    final authState = ref.watch(authControllerProvider);
+    final isLoading = authState.isLoading;
 
     return Scaffold(
       body: SafeArea(
@@ -178,12 +178,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   // Forgot password
                   TextButton(
                     onPressed: isLoading ? null : () {
-                      // TODO: Implement forgot password
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Forgot password feature coming soon'),
-                        ),
-                      );
+                      context.push(AppRoutes.forgotPassword);
                     },
                     child: const Text('Forgot Password?'),
                   ),
@@ -200,12 +195,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: isLoading ? null : () {
-                          // TODO: Navigate to sign up screen
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Sign up feature coming soon'),
-                            ),
-                          );
+                          context.push(AppRoutes.register);
                         },
                         child: const Text('Sign Up'),
                       ),

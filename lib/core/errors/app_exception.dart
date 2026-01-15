@@ -61,7 +61,7 @@ class AuthException extends AppException {
 
   factory AuthException.weakPassword() {
     return const AuthException(
-      message: 'Password is too weak',
+      message: 'Password is too weak. Must be at least 8 characters',
       code: 'weak_password',
     );
   }
@@ -70,6 +70,34 @@ class AuthException extends AppException {
     return const AuthException(
       message: 'Session has expired. Please login again',
       code: 'session_expired',
+    );
+  }
+
+  factory AuthException.invalidEmail() {
+    return const AuthException(
+      message: 'Invalid email address',
+      code: 'invalid_email',
+    );
+  }
+
+  factory AuthException.tooManyRequests() {
+    return const AuthException(
+      message: 'Too many attempts. Please try again later',
+      code: 'too_many_requests',
+    );
+  }
+
+  factory AuthException.emailNotConfirmed() {
+    return const AuthException(
+      message: 'Please verify your email before signing in',
+      code: 'email_not_confirmed',
+    );
+  }
+
+  factory AuthException.passwordResetFailed() {
+    return const AuthException(
+      message: 'Failed to send password reset email',
+      code: 'password_reset_failed',
     );
   }
 }

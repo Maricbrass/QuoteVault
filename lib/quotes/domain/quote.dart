@@ -1,43 +1,28 @@
 /// Domain model representing a quote
-/// Independent of any backend implementation details
+/// Independent of any backend implementation
 class Quote {
   final String id;
   final String text;
   final String author;
-  final String? category;
-  final List<String>? tags;
-  final String? source;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final String category;
+  final DateTime createdAt;
 
   const Quote({
     required this.id,
     required this.text,
     required this.author,
-    this.category,
-    this.tags,
-    this.source,
-    this.createdAt,
-    this.updatedAt,
+    required this.category,
+    required this.createdAt,
   });
 
-  /// Create Quote from JSON
+  /// Create Quote from JSON (from Supabase)
   factory Quote.fromJson(Map<String, dynamic> json) {
     return Quote(
       id: json['id'] as String,
       text: json['text'] as String,
       author: json['author'] as String,
-      category: json['category'] as String?,
-      tags: json['tags'] != null
-          ? List<String>.from(json['tags'] as List)
-          : null,
-      source: json['source'] as String?,
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'] as String)
-          : null,
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'] as String)
-          : null,
+      category: json['category'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
 
@@ -48,10 +33,7 @@ class Quote {
       'text': text,
       'author': author,
       'category': category,
-      'tags': tags,
-      'source': source,
-      'created_at': createdAt?.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
+      'created_at': createdAt.toIso8601String(),
     };
   }
 
@@ -61,20 +43,14 @@ class Quote {
     String? text,
     String? author,
     String? category,
-    List<String>? tags,
-    String? source,
     DateTime? createdAt,
-    DateTime? updatedAt,
   }) {
     return Quote(
       id: id ?? this.id,
       text: text ?? this.text,
       author: author ?? this.author,
       category: category ?? this.category,
-      tags: tags ?? this.tags,
-      source: source ?? this.source,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
     );
   }
 
@@ -87,7 +63,7 @@ class Quote {
         other.text == text &&
         other.author == author &&
         other.category == category &&
-        other.source == source;
+        other.createdAt == createdAt;
   }
 
   @override
@@ -96,12 +72,12 @@ class Quote {
         text.hashCode ^
         author.hashCode ^
         category.hashCode ^
-        source.hashCode;
+        createdAt.hashCode;
   }
 
   @override
   String toString() {
-    return 'Quote(id: $id, text: $text, author: $author)';
+    return 'Quote(id: $id, author: $author, category: $category)';
   }
 }
 

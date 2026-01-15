@@ -1,4 +1,4 @@
-/// Domain model representing a user
+/// Domain model representing a user with profile information
 /// Independent of any backend implementation details
 class User {
   final String id;
@@ -17,7 +17,7 @@ class User {
     this.updatedAt,
   });
 
-  /// Create User from JSON
+  /// Create User from JSON (profile data from Supabase)
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
       id: json['id'] as String,
@@ -33,7 +33,7 @@ class User {
     );
   }
 
-  /// Convert User to JSON
+  /// Convert User to JSON for Supabase updates
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -42,6 +42,14 @@ class User {
       'avatar_url': avatarUrl,
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
+    };
+  }
+
+  /// Create User for profile updates (only mutable fields)
+  Map<String, dynamic> toUpdateJson() {
+    return {
+      'name': name,
+      'avatar_url': avatarUrl,
     };
   }
 
@@ -62,6 +70,24 @@ class User {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
+  }
+
+  /// Get display name (uses name or falls back to email)
+  String get displayName => name?.isNotEmpty == true ? name! : email;
+
+  /// Check if user has a profile picture
+  bool get hasAvatar => avatarUrl != null && avatarUrl!.isNotEmpty;
+
+  /// Get initials for avatar placeholder
+  String get initials {
+    if (name != null && name!.isNotEmpty) {
+      final parts = name!.trim().split(' ');
+      if (parts.length >= 2) {
+        return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
+      }
+      return name![0].toUpperCase();
+    }
+    return email[0].toUpperCase();
   }
 
   @override
@@ -89,7 +115,7 @@ class User {
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, name: $name)';
+    return 'User(id: $id, email: $email, name: $name, hasAvatar: $hasAvatar)';
   }
 }
 

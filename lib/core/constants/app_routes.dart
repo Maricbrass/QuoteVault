@@ -6,6 +6,7 @@ class AppRoutes {
   static const String splash = '/';
   static const String login = '/login';
   static const String register = '/register';
+  static const String forgotPassword = '/forgot-password';
 
   // Main Routes
   static const String home = '/home';
@@ -15,6 +16,8 @@ class AppRoutes {
   // Quote Routes
   static const String quotes = '/quotes';
   static const String quoteDetail = '/quotes/:id';
+  static const String searchQuotes = '/search';
+  static const String categoryQuotes = '/quotes/category/:category';
 
   // Collections Routes
   static const String collections = '/collections';
