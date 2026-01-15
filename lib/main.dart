@@ -5,6 +5,7 @@ import 'app.dart';
 import 'core/services/env_config.dart';
 import 'core/services/supabase_service.dart';
 import 'core/utils/logger.dart';
+import 'daily_quote/services/notification_service.dart';
 
 /// Application entry point
 /// Initializes all required services before running the app
@@ -45,6 +46,10 @@ Future<void> _initializeServices() async {
         'Supabase configuration missing. Please update .env file.',
       );
     }
+
+    // Initialize notification service
+    await NotificationService().initialize();
+    appLogger.info('Notification service initialized');
 
     appLogger.info('All services initialized successfully');
   } catch (e, stackTrace) {

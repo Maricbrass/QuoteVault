@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_routes.dart';
+import '../../../daily_quote/presentation/widgets/daily_quote_widget.dart';
 import '../controllers/quote_feed_controller.dart';
 import '../providers/quote_providers.dart';
 import '../widgets/quote_card.dart';
@@ -50,7 +51,6 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
   @override
   Widget build(BuildContext context) {
     final feedState = ref.watch(quoteFeedProvider);
-    final randomQuoteAsync = ref.watch(randomQuoteProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -79,16 +79,9 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            // Quote of the Day section
-            SliverToBoxAdapter(
-              child: randomQuoteAsync.when(
-                data: (quote) {
-                  if (quote == null) return const SizedBox.shrink();
-                  return _buildQuoteOfTheDay(context, quote);
-                },
-                loading: () => const SizedBox.shrink(),
-                error: (_, __) => const SizedBox.shrink(),
-              ),
+            // Daily Quote Widget
+            const SliverToBoxAdapter(
+              child: DailyQuoteWidget(),
             ),
 
             // Categories section
@@ -188,57 +181,6 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
     );
   }
 
-  Widget _buildQuoteOfTheDay(BuildContext context, quote) {
-    return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.secondaryContainer,
-          ],
-        ),
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                Icons.wb_sunny,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const SizedBox(width: 8),
-              Text(
-                'Quote of the Day',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            '"${quote.text}"',
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  fontStyle: FontStyle.italic,
-                  height: 1.5,
-                ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            '— ${quote.author}',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildCategoriesSection(BuildContext context) {
     final categoriesAsync = ref.watch(categoriesProvider);

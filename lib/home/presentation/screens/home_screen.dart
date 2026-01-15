@@ -27,12 +27,7 @@ class HomeScreen extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             onPressed: () {
-              // TODO: Navigate to settings
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Settings feature coming soon'),
-                ),
-              );
+              context.push(AppRoutes.settings);
             },
             tooltip: 'Settings',
           ),

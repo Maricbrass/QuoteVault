@@ -14,6 +14,7 @@ import '../../home/presentation/screens/home_screen.dart';
 import '../../quotes/presentation/screens/category_quotes_screen.dart';
 import '../../quotes/presentation/screens/quotes_feed_screen.dart';
 import '../../quotes/presentation/screens/search_quotes_screen.dart';
+import '../../settings/presentation/screens/settings_screen.dart';
 import '../constants/app_routes.dart';
 
 /// Provider for GoRouter configuration
@@ -80,6 +81,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.profile,
         name: 'profile',
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.settings,
+        name: 'settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
         path: AppRoutes.favorites,
