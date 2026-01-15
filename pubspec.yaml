@@ -69,6 +69,9 @@ dependencies:
   permission_handler: ^11.3.1
   image_gallery_saver: ^2.0.3
 
+  # App info
+  package_info_plus: ^8.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

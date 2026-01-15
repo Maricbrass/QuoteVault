@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../favorites/presentation/controllers/favorites_controller.dart';
 import '../../../favorites/presentation/controllers/likes_controller.dart';
+import '../../../settings/presentation/controllers/settings_controller.dart';
 import '../../../sharing/presentation/widgets/quote_share_bottom_sheet.dart';
 import '../../domain/quote.dart';
 
@@ -22,6 +23,7 @@ class QuoteCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final favoritesState = ref.watch(favoritesControllerProvider);
     final likesState = ref.watch(likesControllerProvider);
+    final settings = ref.watch(settingsControllerProvider);
 
     final isFavorited = favoritesState.isFavorited(quote.id);
     final isLiked = likesState.isLiked(quote.id);
@@ -43,54 +45,60 @@ class QuoteCard extends ConsumerWidget {
                 '"${quote.text}"',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       fontStyle: FontStyle.italic,
-                      height: 1.5,
+                      fontSize: (Theme.of(context).textTheme.bodyLarge?.fontSize ?? 16) *
+                          settings.fontSizeScale,
+                      height: settings.lineSpacing,
                     ),
               ),
               const SizedBox(height: 12),
 
               // Author
-              Row(
-                children: [
-                  Icon(
-                    Icons.person_outline,
-                    size: 16,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      '— ${quote.author}',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                          ),
+              if (settings.showAuthor)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.person_outline,
+                      size: 16,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        '— ${quote.author}',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              fontSize: (Theme.of(context).textTheme.bodyMedium?.fontSize ?? 14) *
+                                  settings.fontSizeScale,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            ),
+                      ),
+                    ),
+                  ],
+                ),
               const SizedBox(height: 8),
 
               // Category and actions
               Row(
                 children: [
                   // Category tag
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
+                  if (settings.showCategory)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: _getCategoryColor(context, quote.category),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        quote.category,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                      ),
                     ),
-                    decoration: BoxDecoration(
-                      color: _getCategoryColor(context, quote.category),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      quote.category,
-                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                    ),
-                  ),
                   const Spacer(),
 
                   // Share button
