@@ -64,8 +64,14 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
             pinned: true,
             elevation: 0,
             backgroundColor: isDarkMode
-                ? const Color(0xFF101022)
-                : const Color(0xFFF6F6F8),
+                ? const Color(0xFF101022).withOpacity(0.8)
+                : const Color(0xFFF6F6F8).withOpacity(0.8),
+            flexibleSpace: ClipRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
             title: const Text(
               'Collections',
               style: TextStyle(
@@ -74,6 +80,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                 letterSpacing: -0.3,
               ),
             ),
+            centerTitle: true,
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: 16),
@@ -85,12 +92,12 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1111D4).withAlpha((0.1 * 255).toInt()),
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.add,
-                      color: Color(0xFF1111D4),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -277,8 +284,8 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        const Color(0xFF1111D4).withAlpha((0.2 * 255).toInt()),
-                        const Color(0xFF6A6AFF).withAlpha((0.1 * 255).toInt()),
+                        Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                        Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                       ],
                     ),
                     borderRadius: const BorderRadius.vertical(
@@ -289,7 +296,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                     child: Icon(
                       Icons.auto_stories,
                       size: 48,
-                      color: const Color(0xFF1111D4).withAlpha((0.5 * 255).toInt()),
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -306,8 +313,8 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                           fontWeight: FontWeight.w700,
                           letterSpacing: 1.2,
                           color: isDarkMode
-                              ? const Color(0xFF6A6AFF)
-                              : const Color(0xFF1111D4),
+                              ? Theme.of(context).colorScheme.secondary
+                              : Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -341,7 +348,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF1111D4),
+                              backgroundColor: Theme.of(context).colorScheme.primary,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 16,
@@ -384,6 +391,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
       {'bg': const Color(0xFFF3F4FF), 'darkBg': const Color(0xFF25254D), 'icon': Icons.wb_sunny, 'iconColor': const Color(0xFF1111D4)},
       {'bg': const Color(0xFFFFF7F0), 'darkBg': const Color(0xFF3D2D1D), 'icon': Icons.account_balance, 'iconColor': const Color(0xFFF59E0B)},
       {'bg': const Color(0xFFF0F9FF), 'darkBg': const Color(0xFF1D2D3D), 'icon': Icons.dark_mode, 'iconColor': const Color(0xFF0EA5E9)},
+      {'bg': const Color(0xFFF0FDF4), 'darkBg': const Color(0xFF1D3D2D), 'icon': Icons.nature, 'iconColor': const Color(0xFF10B981)},
       {'bg': const Color(0xFFFDF2F8), 'darkBg': const Color(0xFF3D1D2D), 'icon': Icons.work, 'iconColor': const Color(0xFFEC4899)},
     ];
 
@@ -562,7 +570,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
               icon: const Icon(Icons.add),
               label: const Text('Create Collection'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF1111D4),
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
@@ -611,7 +619,7 @@ class _CollectionsScreenState extends ConsumerState<CollectionsScreen> {
               icon: const Icon(Icons.refresh),
               label: const Text('Retry'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF1111D4),
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),

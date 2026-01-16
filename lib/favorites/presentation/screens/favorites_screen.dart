@@ -41,49 +41,50 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
             pinned: true,
             elevation: 0,
             backgroundColor: isDarkMode
-                ? const Color(0xFF101022).withAlpha((0.8 * 255).toInt())
-                : const Color(0xFFF6F6F8).withAlpha((0.8 * 255).toInt()),
-            expandedHeight: 140,
+                ? const Color(0xFF101022).withOpacity(0.8)
+                : const Color(0xFFF6F6F8).withOpacity(0.8),
             flexibleSpace: ClipRect(
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: FlexibleSpaceBar(
-                  background: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 60, 16, 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'My Favorites',
-                              style: TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: -0.5,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.search, size: 24),
-                                  onPressed: () {},
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.tune, size: 24),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                child: Container(color: Colors.transparent),
               ),
             ),
+            title: const Text('My Favorites'),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.search,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 20,
+                  ),
+                ),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.tune,
+                    color: Theme.of(context).colorScheme.primary,
+                    size: 20,
+                  ),
+                ),
+                onPressed: () {},
+              ),
+            ],
           ),
 
           // Filter Chips
@@ -108,7 +109,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? const Color(0xFF1111D4)
+                                ? Theme.of(context).colorScheme.primary
                                 : isDarkMode
                                     ? Colors.white.withAlpha((0.1 * 255).toInt())
                                     : Colors.white,
@@ -367,7 +368,7 @@ class _FavoritesScreenState extends ConsumerState<FavoritesScreen> {
               icon: const Icon(Icons.refresh),
               label: const Text('Retry'),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF1111D4),
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),

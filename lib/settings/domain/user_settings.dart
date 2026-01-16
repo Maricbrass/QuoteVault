@@ -24,8 +24,8 @@ class UserSettings {
 
   const UserSettings({
     this.themeMode = ThemeMode.system,
-    this.accentColor = AccentColor.blue,
-    this.fontFamily = FontFamily.serif,
+    this.accentColor = AccentColor.primary,
+    this.fontFamily = FontFamily.manrope,
     this.fontSizeScale = 1.0,
     this.lineSpacing = 1.5,
     this.showAuthor = true,

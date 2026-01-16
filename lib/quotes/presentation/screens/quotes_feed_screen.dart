@@ -1,5 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart' as material;
-import 'package:flutter/material.dart' show Scaffold, AppBar, Text, TextStyle, ScaffoldMessenger, SnackBar, Column, RefreshIndicator, CustomScrollView, ScrollController, SliverToBoxAdapter, SliverList, SliverChildBuilderDelegate, SliverFillRemaining, Padding, EdgeInsets, Container, BoxDecoration, BorderRadius, ThemeData, Theme, Brightness, Color, BoxShadow, Offset, BoxShape, Center, CircularProgressIndicator, Row, Expanded, TextButton, ElevatedButton, ListView, InkWell, MainAxisAlignment, Widget, BuildContext, FontWeight, Colors, Axis, SizedBox;
+import 'package:flutter/material.dart' show Scaffold, AppBar, Text, TextStyle, ScaffoldMessenger, SnackBar, Column, RefreshIndicator, CustomScrollView, ScrollController, SliverToBoxAdapter, SliverList, SliverChildBuilderDelegate, SliverFillRemaining, Padding, EdgeInsets, Container, BoxDecoration, BorderRadius, ThemeData, Theme, Brightness, Color, BoxShadow, Offset, BoxShape, Center, CircularProgressIndicator, Row, Expanded, TextButton, ElevatedButton, ListView, InkWell, MainAxisAlignment, Widget, BuildContext, FontWeight, Colors, Axis, SizedBox, Icon, BackdropFilter, ClipRect, Icons, IconButton;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/constants/app_routes.dart';
@@ -56,21 +58,27 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).brightness == Brightness.dark
-          ? const Color(0xFF111E21)
-          : const Color(0xFFF6F8F8),
+          ? const Color(0xFF101022)
+          : const Color(0xFFF6F6F8),
       appBar: AppBar(
         backgroundColor: Theme.of(context).brightness == Brightness.dark
-            ? const Color(0xFF111E21).withAlpha((0.8 * 255).toInt())
-            : const Color(0xFFF6F8F8).withAlpha((0.8 * 255).toInt()),
+            ? const Color(0xFF101022).withOpacity(0.8)
+            : const Color(0xFFF6F6F8).withOpacity(0.8),
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(color: Colors.transparent),
+          ),
+        ),
         leading: Container(
           margin: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFF17B0CF).withAlpha((0.2 * 255).toInt()),
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: const material.Icon(
-            material.Icons.format_quote,
-            color: Color(0xFF17B0CF),
+          child: Icon(
+            Icons.format_quote,
+            color: Theme.of(context).colorScheme.primary,
             size: 20,
           ),
         ),
@@ -85,8 +93,20 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
         centerTitle: true,
         actions: [
           // Notifications button
-          material.IconButton(
-            icon: const material.Icon(material.Icons.notifications_outlined),
+          IconButton(
+            icon: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.notifications_outlined,
+                color: Theme.of(context).colorScheme.primary,
+                size: 20,
+              ),
+            ),
             onPressed: () {
               // TODO: Navigate to notifications
             },
@@ -233,11 +253,11 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
                     height: 36,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF17B0CF),
+                      color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF17B0CF).withAlpha((0.3 * 255).toInt()),
+                          color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -268,14 +288,14 @@ class _QuotesFeedScreenState extends ConsumerState<QuotesFeedScreen> {
                     height: 36,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF17B0CF).withAlpha((0.1 * 255).toInt()),
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Center(
                       child: Text(
                         category,
-                        style: const TextStyle(
-                          color: Color(0xFF17B0CF),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),

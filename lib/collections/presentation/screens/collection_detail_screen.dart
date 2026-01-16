@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../quotes/presentation/widgets/quote_card.dart';
@@ -16,10 +18,24 @@ class CollectionDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quotesAsync = ref.watch(collectionQuotesProvider(collection.id));
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
+      backgroundColor: isDarkMode
+          ? const Color(0xFF101022)
+          : const Color(0xFFF6F6F8),
       appBar: AppBar(
+        backgroundColor: isDarkMode
+            ? const Color(0xFF101022).withOpacity(0.8)
+            : const Color(0xFFF6F6F8).withOpacity(0.8),
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(color: Colors.transparent),
+          ),
+        ),
         title: Text(collection.name),
+        centerTitle: true,
         actions: [
           // Quote count badge
           Center(

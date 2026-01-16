@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../controllers/settings_controller.dart';
 import '../../domain/settings_enums.dart' as enums;
 
@@ -7,44 +8,95 @@ import '../../domain/settings_enums.dart' as enums;
 class ThemeService {
   /// Generate light theme from settings
   static ThemeData getLightTheme(Color accentColor, enums.FontFamily fontFamily) {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: accentColor,
+      brightness: Brightness.light,
+    ).copyWith(
+      surface: const Color(0xFFF6F6F8),
+      background: const Color(0xFFF6F6F8),
+    );
+
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: accentColor,
-        brightness: Brightness.light,
-      ),
-      fontFamily: fontFamily.fontFamily,
+      colorScheme: colorScheme,
+      fontFamily: _getFontFamily(fontFamily),
+      scaffoldBackgroundColor: const Color(0xFFF6F6F8),
       appBarTheme: AppBarTheme(
         centerTitle: false,
         elevation: 0,
-        backgroundColor: ColorScheme.fromSeed(
-          seedColor: accentColor,
-          brightness: Brightness.light,
-        ).surface,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     );
   }
 
   /// Generate dark theme from settings
   static ThemeData getDarkTheme(Color accentColor, enums.FontFamily fontFamily) {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: accentColor,
+      brightness: Brightness.dark,
+    ).copyWith(
+      surface: const Color(0xFF101022),
+      background: const Color(0xFF101022),
+    );
+
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: accentColor,
-        brightness: Brightness.dark,
-      ),
-      fontFamily: fontFamily.fontFamily,
+      colorScheme: colorScheme,
+      fontFamily: _getFontFamily(fontFamily),
+      scaffoldBackgroundColor: const Color(0xFF101022),
       appBarTheme: AppBarTheme(
         centerTitle: false,
         elevation: 0,
-        backgroundColor: ColorScheme.fromSeed(
-          seedColor: accentColor,
-          brightness: Brightness.dark,
-        ).surface,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+      ),
+      cardTheme: CardThemeData(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
     );
+  }
+
+  static String _getFontFamily(enums.FontFamily fontFamily) {
+    switch (fontFamily) {
+      case enums.FontFamily.serif:
+        return 'serif';
+      case enums.FontFamily.sans:
+        return 'sans-serif';
+      case enums.FontFamily.mono:
+        return 'monospace';
+      case enums.FontFamily.manrope:
+        return GoogleFonts.manrope().fontFamily!;
+    }
   }
 }
 

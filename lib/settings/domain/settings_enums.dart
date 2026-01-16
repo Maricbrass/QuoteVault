@@ -20,7 +20,8 @@ enum ThemeMode {
 enum FontFamily {
   serif,
   sans,
-  mono;
+  mono,
+  manrope;
 
   String get displayName {
     switch (this) {
@@ -30,6 +31,8 @@ enum FontFamily {
         return 'Sans Serif';
       case FontFamily.mono:
         return 'Monospace';
+      case FontFamily.manrope:
+        return 'Manrope';
     }
   }
 
@@ -41,6 +44,8 @@ enum FontFamily {
         return 'sans-serif';
       case FontFamily.mono:
         return 'monospace';
+      case FontFamily.manrope:
+        return 'Manrope';
     }
   }
 }
@@ -52,7 +57,8 @@ enum AccentColor {
   green,
   orange,
   pink,
-  teal;
+  teal,
+  primary;
 
   String get displayName {
     switch (this) {
@@ -68,6 +74,8 @@ enum AccentColor {
         return 'Pink';
       case AccentColor.teal:
         return 'Teal';
+      case AccentColor.primary:
+        return 'Primary';
     }
   }
 
@@ -85,7 +93,8 @@ enum AccentColor {
         return 0xFFE91E63;
       case AccentColor.teal:
         return 0xFF009688;
+      case AccentColor.primary:
+        return 0xFF1111d4;
     }
   }
 }
-

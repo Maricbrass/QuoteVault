@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -304,9 +305,24 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     }
 
     if (profile == null) {
+      final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+      final colorScheme = Theme.of(context).colorScheme;
       return Scaffold(
+        backgroundColor: isDarkMode
+            ? const Color(0xFF101022)
+            : const Color(0xFFF6F6F8),
         appBar: AppBar(
+          backgroundColor: isDarkMode
+              ? const Color(0xFF101022).withOpacity(0.8)
+              : const Color(0xFFF6F6F8).withOpacity(0.8),
+          flexibleSpace: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(color: Colors.transparent),
+            ),
+          ),
           title: const Text('Profile'),
+          centerTitle: true,
         ),
         body: Center(
           child: Column(
@@ -328,18 +344,57 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       );
     }
 
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
+      backgroundColor: isDarkMode
+          ? const Color(0xFF101022)
+          : const Color(0xFFF6F6F8),
       appBar: AppBar(
+        backgroundColor: isDarkMode
+            ? const Color(0xFF101022).withOpacity(0.8)
+            : const Color(0xFFF6F6F8).withOpacity(0.8),
+        flexibleSpace: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(color: Colors.transparent),
+          ),
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.settings),
+          icon: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: colorScheme.primary.withOpacity(0.1),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.settings,
+              color: colorScheme.primary,
+              size: 20,
+            ),
+          ),
           onPressed: () {
             context.go(AppRoutes.settings);
           },
         ),
         title: const Text('Profile'),
+        centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.ios_share),
+            icon: Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: colorScheme.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.ios_share,
+                color: colorScheme.primary,
+                size: 20,
+              ),
+            ),
             onPressed: () {
               // TODO: Implement share functionality
             },
